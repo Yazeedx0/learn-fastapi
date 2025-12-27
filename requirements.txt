@@ -10,3 +10,4 @@ alembic==1.17.2
 python-jose==3.5.0
 python-multipart==0.0.21
 fastapi-users-db-sqlalchemy==7.0.0
+slowapi==0.1.9
