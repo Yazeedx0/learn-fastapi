@@ -13,11 +13,10 @@ class UserRead(BaseModel):
 
     id: UUID 
     email: EmailStr
-    is_activate: bool 
-    is_verified: bool 
+    is_active: bool 
+    is_verfied: bool 
     role: str 
-    create_at: datetime
+    created_at: datetime
 
     class Config: 
-        from_attributes: True 
-        
+        from_attributes = True 

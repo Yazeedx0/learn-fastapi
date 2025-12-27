@@ -8,7 +8,7 @@ def create_user(db: Session, user_in: UserCreate) -> User:
 
     user = User(
         email=user_in.email,
-        hash_password=hash_password(user_in.password)
+        hashed_password=hash_password(user_in.password)
     )
 
     db.add(user)

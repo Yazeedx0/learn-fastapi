@@ -7,3 +7,6 @@ uvicorn==0.40.0
 psycopg2-binary==2.9.9
 email-validator==2.3.0
 alembic==1.17.2
+python-jose==3.5.0
+python-multipart==0.0.21
+fastapi-users-db-sqlalchemy==7.0.0
