@@ -3,11 +3,14 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from app.auth.authorization import require_role
 from app.users.roles import UserRole
+from app.users.service import User
 from app.auth.refresh_service import create_refresh_token
+from app.auth.models import RefreshToken
 from app.core.database import get_db
 from app.auth.service import authenticate_user
 from app.core.limiter import limiter
-from app.auth.schemas import TokenResponse
+from app.auth.schemas import TokenResponse, PasswordResetRequest
+from app.auth.password_reset_service import verify_and_reset_password
 
 router = APIRouter()
 
@@ -48,18 +51,16 @@ async def login(
         "token_type": "bearer"
     }
 
-@router.get("/admin-only")
-def admin_only_router(
-    
-    admin_user = Depends(require_role(UserRole.ADMIN))
+@router.post("/reset-password")
+def reset_password(
+    reset_data: PasswordResetRequest,
+    db: Session = Depends(get_db),
 ):
-    """
-    Admin-only endpoint for testing role-based access control.
-    
-    Requires authentication and ADMIN role.
-    Returns a welcome message for admin users.
-    """
-    return {
-        "message": "Welcome, admin"
-    }
 
+    verify_and_reset_password(
+        db=db,
+        token=reset_data.token,
+        new_password=reset_data.new_password
+    )
+    
+    return {"message": "Password successfully updated"}
