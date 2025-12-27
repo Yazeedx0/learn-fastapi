@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:18
+    restart: always
+    environment:
+      - POSTGRES_USER=yazeed
+      - POSTGRES_PASSWORD=testing
+      - POSTGRES_DB=fastapi_db
+      - PGDATA=/var/lib/postgresql/data/pgdata  
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

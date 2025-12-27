@@ -1,0 +1,10 @@
+from fastapi import FastAPI
+
+# from app.auth.router import router as auth_router 
+from app.users.router import router as users_router
+
+
+app = FastAPI(title="User Management API")
+
+# app.include_router(auth_router, prefix="/auth", tags=["auth"])
+app.include_router(users_router, prefix="/users", tags=["users"])
