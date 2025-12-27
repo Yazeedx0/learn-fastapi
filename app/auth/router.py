@@ -13,6 +13,7 @@ router = APIRouter()
 
 
 @router.post("/login", response_model=TokenResponse)
+@limiter.limit("5/minute")
 async def login(
     request: Request,
     form_data: OAuth2PasswordRequestForm = Depends(),
@@ -23,9 +24,6 @@ async def login(
     
     Rate limited to 5 requests per minute per IP address.
     """
-    # Apply rate limiting
-    await limiter.limit("5/minute")(request)
-    
     result = authenticate_user(
         db,
         email = form_data.username,
@@ -52,6 +50,7 @@ async def login(
 
 @router.get("/admin-only")
 def admin_only_router(
+    
     admin_user = Depends(require_role(UserRole.ADMIN))
 ):
     """

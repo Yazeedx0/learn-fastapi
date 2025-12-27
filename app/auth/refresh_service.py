@@ -19,7 +19,7 @@ def create_refresh_token(
     
     token = RefreshToken(
         user_id=user_id,
-        expires_at=datetime.now(timezone=True) 
+        expires_at=datetime.now(timezone.utc) 
         + timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS),
     )
 
